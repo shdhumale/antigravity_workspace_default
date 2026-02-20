@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="002-create-refresh-tokens" author="antigravity">
+        <createTable tableName="refresh_tokens">
+            <column name="id" type="char(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="char(36)">
+                <constraints nullable="false" foreignKeyName="fk_rt_user" referencedTableName="users" referencedColumnNames="id"/>
+            </column>
+            <column name="token_hash" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="issued_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expires_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="revoked_at" type="datetime"/>
+            <column name="replaced_by_id" type="char(36)">
+                <constraints foreignKeyName="fk_rt_replacement" referencedTableName="refresh_tokens" referencedColumnNames="id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

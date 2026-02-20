@@ -8,7 +8,7 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: Tests are MANDATORY as per the project constitution (Principle V). All implementation tasks must be preceded by failing tests.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -56,20 +56,22 @@ description: "Task list template for feature implementation"
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 
-**Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
+**Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented.
+All tasks below are non-negotiable per Constitution Principles II, III, IV, and VI.
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-Examples of foundational tasks (adjust based on your project):
+- [ ] T004 Configure MySQL 8.0 datasource and initialise Liquibase master changelog
+- [ ] T005 [P] Implement Spring Security configuration with JWT filter chain (access + refresh tokens)
+- [ ] T006 [P] Scaffold Angular routing module with lazy-loaded feature modules per bounded context
+- [ ] T007 Create base JPA `@Entity` classes and shared repository patterns
+- [ ] T008 Implement global exception handler (`@ControllerAdvice`) returning standard error envelope
+- [ ] T009 Implement structured audit logging service (captures entity type, action, actor, timestamp)
+- [ ] T010 Enable Virtual Threads in Spring Boot (`spring.threads.virtual.enabled=true`) and validate
+- [ ] T011 [P] Configure Angular HTTP interceptor for JWT attach + 401 redirect
+- [ ] T012 [P] Set up CI pipeline: lint gates (Checkstyle + ESLint), unit test gates, build verification
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
-
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+**Checkpoint**: Foundation ready — JWT secured, Liquibase running, Angular routing live, audit log active
 
 ---
 

@@ -1,0 +1,486 @@
+openapi: "3.1.0"
+info:
+  title: Product Management API
+  description: Product catalogue lifecycle — create, update, status transitions, image upload, approval workflow
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local development
+
+tags:
+  - name: products
+    description: Product catalogue operations
+  - name: product-images
+    description: Product image upload
+  - name: approvals
+    description: Product approval workflow (Admin only)
+
+security:
+  - BearerAuth: []
+
+paths:
+  /products:
+    get:
+      tags: [products]
+      summary: List products (paginated)
+      operationId: listProducts
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [DRAFT, PENDING, ACTIVE, REJECTED, ARCHIVED]
+        - name: categoryId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: createdBy
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: sort
+          in: query
+          schema:
+            type: string
+            default: createdAt,desc
+      responses:
+        "200":
+          description: Paginated product list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductPage"
+
+    post:
+      tags: [products]
+      summary: Create a product (Manager/Admin)
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductRequest"
+      responses:
+        "201":
+          description: Product created in DRAFT status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntity"
+
+  /products/{id}:
+    get:
+      tags: [products]
+      summary: Get product by ID
+      operationId: getProduct
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+    patch:
+      tags: [products]
+      summary: Update product (Manager — own DRAFT/REJECTED; Admin — any)
+      operationId: updateProduct
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: If-Match
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Current version value for optimistic locking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProductRequest"
+      responses:
+        "200":
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "409":
+          description: Optimistic locking conflict — fetch latest and retry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /products/{id}/submit:
+    post:
+      tags: [products]
+      summary: Submit product for approval (Manager → PENDING status)
+      operationId: submitProduct
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Product submitted — status is now PENDING
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "422":
+          description: Product not in DRAFT or REJECTED status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /products/{id}/archive:
+    post:
+      tags: [products]
+      summary: Archive an ACTIVE product (Admin only)
+      operationId: archiveProduct
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Product archived
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "422":
+          description: Product is not in ACTIVE status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /products/{id}/images:
+    post:
+      tags: [product-images]
+      summary: Upload product image (max 5 MB, max 10 images)
+      operationId: uploadProductImage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                displayOrder:
+                  type: integer
+                  default: 0
+      responses:
+        "201":
+          description: Image uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductImageResponse"
+        "400":
+          description: File too large or too many images
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+
+  /products/{id}/images/{imageId}:
+    delete:
+      tags: [product-images]
+      summary: Delete a product image
+      operationId: deleteProductImage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: imageId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Image deleted
+
+  /approvals/{productId}/approve:
+    post:
+      tags: [approvals]
+      summary: Approve a PENDING product (Admin only)
+      operationId: approveProduct
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Product approved — status is now ACTIVE
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /approvals/{productId}/reject:
+    post:
+      tags: [approvals]
+      summary: Reject a PENDING product with a mandatory comment (Admin only)
+      operationId: rejectProduct
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RejectRequest"
+      responses:
+        "200":
+          description: Product rejected — status is now REJECTED
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    BadRequest:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+    UnprocessableEntity:
+      description: Business rule violation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ApiError"
+
+  schemas:
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        sku:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        categoryId:
+          type: string
+          format: uuid
+        price:
+          type: number
+          format: double
+        inventoryQty:
+          type: integer
+        status:
+          type: string
+          enum: [DRAFT, PENDING, ACTIVE, REJECTED, ARCHIVED]
+        rejectionReason:
+          type: string
+          nullable: true
+        createdBy:
+          type: string
+          format: uuid
+        approvedBy:
+          type: string
+          format: uuid
+          nullable: true
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductImageResponse"
+        version:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    ProductPage:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductResponse"
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        page:
+          type: integer
+        size:
+          type: integer
+
+    CreateProductRequest:
+      type: object
+      required: [name, categoryId, price, inventoryQty]
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        categoryId:
+          type: string
+          format: uuid
+        price:
+          type: number
+          minimum: 0.01
+        inventoryQty:
+          type: integer
+          minimum: 0
+
+    UpdateProductRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        categoryId:
+          type: string
+          format: uuid
+        price:
+          type: number
+          minimum: 0.01
+        inventoryQty:
+          type: integer
+          minimum: 0
+
+    ProductImageResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        storageUrl:
+          type: string
+        fileName:
+          type: string
+        displayOrder:
+          type: integer
+        uploadedAt:
+          type: string
+          format: date-time
+
+    RejectRequest:
+      type: object
+      required: [comment]
+      properties:
+        comment:
+          type: string
+          minLength: 10
+          description: Mandatory rejection reason that will be visible to the Manager
+
+    ApiError:
+      type: object
+      properties:
+        status:
+          type: integer
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string

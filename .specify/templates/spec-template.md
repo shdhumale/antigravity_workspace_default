@@ -84,21 +84,32 @@
 
 ### Functional Requirements
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **FR-001**: System MUST [specific capability, e.g., "allow authenticated users to create a product record"]
+- **FR-002**: System MUST [specific capability, e.g., "validate all inputs via Jakarta Bean Validation (backend) and Angular reactive form validators (frontend)"]
+- **FR-003**: Users MUST be able to [key interaction, e.g., "search and filter products by name, category, and price range"]
+- **FR-004**: System MUST [data requirement, e.g., "record an immutable audit log entry for every create/update/delete operation"]
+- **FR-005**: System MUST [behaviour, e.g., "enforce role-based access control — Admins can delete, Managers can edit, Viewers are read-only"]
 
 *Example of marking unclear requirements:*
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-006**: System MUST authenticate users via JWT [NEEDS CLARIFICATION: token expiry window and refresh strategy not specified]
+- **FR-007**: System MUST retain audit records for [NEEDS CLARIFICATION: retention period / archival policy not specified]
+
+### User Roles & Permissions *(include for every module)*
+
+| Role    | Permissions                                        |
+|---------|----------------------------------------------------|
+| Admin   | Full CRUD + role assignment + system configuration |
+| Manager | Create, Read, Update (no delete, no role changes)  |
+| Viewer  | Read-only access to assigned modules               |
 
 ### Key Entities *(include if feature involves data)*
 
-- **[Entity 1]**: [What it represents, key attributes without implementation]
-- **[Entity 2]**: [What it represents, relationships to other entities]
+- **[Entity 1]**: [What it represents, key attributes without implementation. E.g., **Product** — id, name, description, category, price, status (draft/active/archived), created_by, created_at]
+- **[Entity 2]**: [What it represents, relationships to other entities. E.g., **ProductFeature** — id, product_id (FK), feature_name, enabled (bool), visible_to_roles]
+- **[Entity 3]**: [E.g., **AuditLog** — id, entity_type, entity_id, action (CREATE/UPDATE/DELETE), performed_by, timestamp, old_value (JSON), new_value (JSON)]
+
+> **Note**: Every entity must map to a Liquibase changeset and a JPA `@Entity`. Ensure each entity is traceable from the Liquibase changelog through service layer to Angular model.
 
 ## Success Criteria *(mandatory)*
 

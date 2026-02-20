@@ -1,0 +1,234 @@
+openapi: "3.1.0"
+info:
+  title: Auth API
+  description: Authentication & Authorisation — JWT login, refresh, logout, MFA
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/api/v1
+    description: Local development
+
+tags:
+  - name: auth
+    description: Authentication operations
+
+paths:
+  /auth/login:
+    post:
+      tags: [auth]
+      summary: Login with email and password
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        "200":
+          description: Login successful — tokens issued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "423":
+          description: Account locked — too many failed attempts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+  /auth/login/mfa:
+    post:
+      tags: [auth]
+      summary: Complete MFA verification after initial login
+      operationId: completeMfaLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MfaVerifyRequest'
+      responses:
+        "200":
+          description: MFA passed — tokens issued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/refresh:
+    post:
+      tags: [auth]
+      summary: Exchange refresh token for new access + refresh tokens (rotation)
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        "200":
+          description: Tokens rotated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/logout:
+    post:
+      tags: [auth]
+      summary: Revoke refresh token (server-side invalidation)
+      operationId: logout
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        "204":
+          description: Logged out — refresh token revoked
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/mfa/setup:
+    post:
+      tags: [auth]
+      summary: Generate TOTP secret and provisioning URI for MFA setup
+      operationId: setupMfa
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: MFA setup data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MfaSetupResponse'
+
+  /auth/mfa/verify-setup:
+    post:
+      tags: [auth]
+      summary: Confirm TOTP code to activate MFA on the account
+      operationId: verifyMfaSetup
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MfaVerifyRequest'
+      responses:
+        "200":
+          description: MFA activated
+        "400":
+          $ref: '#/components/responses/BadRequest'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    Unauthorized:
+      description: Authentication required or token invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    BadRequest:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+    Forbidden:
+      description: Insufficient role
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+
+  schemas:
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Short-lived JWT (15 min)
+        refreshToken:
+          type: string
+          description: Long-lived opaque token (7 days)
+        tokenType:
+          type: string
+          default: Bearer
+        expiresIn:
+          type: integer
+          description: Access token TTL in seconds
+          default: 900
+        mfaRequired:
+          type: boolean
+          description: True when MFA challenge must be completed before tokens are active
+
+    RefreshRequest:
+      type: object
+      required: [refreshToken]
+      properties:
+        refreshToken:
+          type: string
+
+    MfaVerifyRequest:
+      type: object
+      required: [code]
+      properties:
+        code:
+          type: string
+          description: 6-digit TOTP code
+          pattern: '^\d{6}$'
+
+    MfaSetupResponse:
+      type: object
+      properties:
+        secret:
+          type: string
+          description: Base32-encoded TOTP secret (show to user once)
+        otpAuthUrl:
+          type: string
+          description: otpauth:// URI for QR code generation
+
+    ApiError:
+      type: object
+      properties:
+        status:
+          type: integer
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="003-create-categories" author="antigravity">
+        <createTable tableName="categories">
+            <column name="id" type="char(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="004-create-products" author="antigravity">
+        <createTable tableName="products">
+            <column name="id" type="char(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text"/>
+            <column name="category_id" type="char(36)">
+                <constraints foreignKeyName="fk_prod_cat" referencedTableName="categories" referencedColumnNames="id"/>
+            </column>
+            <column name="price" type="decimal(19,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="inventory_qty" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by_id" type="char(36)">
+                <constraints foreignKeyName="fk_prod_user" referencedTableName="users" referencedColumnNames="id"/>
+            </column>
+            <column name="created_at" type="datetime"/>
+            <column name="updated_at" type="datetime"/>
+            <column name="version" type="bigint" defaultValueNumeric="0"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="005-create-product-images" author="antigravity">
+        <createTable tableName="product_images">
+            <column name="id" type="char(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product_id" type="char(36)">
+                <constraints nullable="false" foreignKeyName="fk_img_prod" referencedTableName="products" referencedColumnNames="id"/>
+            </column>
+            <column name="image_url" type="varchar(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_primary" type="boolean" defaultValueBoolean="false"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

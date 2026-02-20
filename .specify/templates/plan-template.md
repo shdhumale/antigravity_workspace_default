@@ -17,21 +17,26 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: Frontend — Angular (Latest LTS) / Backend — Java 21 (JDK 21, Virtual Threads)  
+**Primary Dependencies**: Spring Boot 3.x, Spring Security (JWT), Spring Data JPA, RxJS, Liquibase  
+**Storage**: MySQL 8.0 — all schema changes via Liquibase changesets  
+**Testing**: JUnit 5 + Mockito (backend) / Jasmine + Karma (frontend) / Cypress or Playwright (E2E)  
+**Target Platform**: Web (REST API server + Angular SPA)  
+**Project Type**: Web application (`backend/` + `frontend/` layout)  
+**Performance Goals**: p95 API response ≤ 300 ms under nominal load  
+**Constraints**: HTTPS-only; JWT tokens required for all protected endpoints; no DDL outside Liquibase  
+**Scale/Scope**: Stateless, horizontally scalable services; support multi-role user base (Admin, Manager, Viewer)
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+*   [ ] **Principle I — Architecture**: Does the plan adhere to the modular bounded-context structure (Angular feature module + Spring Boot service + dedicated Liquibase changelog per module)?
+*   [ ] **Principle II — Tech Stack & Concurrency**: Does the plan use Angular (Latest LTS) + RxJS, Spring Boot 3.x, JDK 21, and are Virtual Threads enabled for all I/O-bound operations?
+*   [ ] **Principle III — Database Integrity**: Is every schema change tracked as a Liquibase changeset? Is no ad-hoc DDL permitted?
+*   [ ] **Principle IV — Secure REST**: Are all protected endpoints secured via JWT + Spring Security? Does the OpenAPI contract use `/api/v1/…` versioning and a standard error envelope?
+*   [ ] **Principle V — TDD**: Does the plan mandate failing tests before implementation? Are unit, integration, and E2E test tasks present?
+*   [ ] **Principle VI — Domain Modules**: Does the plan implement the feature within its correct bounded context (Auth, User Mgmt, Product Mgmt, Feature Mgmt, Search, Dashboard, Audit, Notifications, API Layer, Data Validation, or Advanced modules)?
 
 ## Project Structure
 
