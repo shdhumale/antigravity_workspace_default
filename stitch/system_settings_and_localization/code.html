@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>System Settings &amp; Localization</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .sidebar-item-active {
+            background-color: rgba(19, 127, 236, 0.1);
+            color: #137fec;
+            border-right: 3px solid #137fec;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">settings_suggest</span>
+</div>
+<div>
+<h1 class="font-bold text-lg leading-tight">Admin Console</h1>
+<p class="text-xs text-slate-500 font-medium">System Management</p>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span class="font-semibold text-sm">General</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 sidebar-item-active rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px]">language</span>
+<span class="font-semibold text-sm">Localization</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="font-semibold text-sm">Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px]">security</span>
+<span class="font-semibold text-sm">Security</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px]">api</span>
+<span class="font-semibold text-sm">Integrations</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+<img alt="User Profile" class="w-10 h-10 rounded-lg object-cover" data-alt="Professional corporate headshot of system administrator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqqiE6Aj0Lu-MlWl8c-kuNI2k51t2NMArSWhseUFyyR0zB5TqomfHgNg_ofcXHaC4P_ifqvFTECbTfyPuySWeQkAzVFt43WDxT5P8iDeWN5TkBoSKVGF77epKHg-bzhs4XrMsKk7yg57BAAc-fjh6KwEYf9CutqC-qiQcbLo6xAVYqlnmQsYBUQewMJnaRiuPpAfr1yWS6U3afrk31sSwm906KOhA1D0LZOgANQKoxxiOz7agHHvNIujU0bI0CwNMEi3V4KRxEtA"/>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-bold truncate">Alex Rivera</p>
+<p class="text-xs text-slate-500 truncate">Super Admin</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary transition-colors">logout</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Header Section -->
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 flex items-center justify-between shrink-0">
+<div class="flex items-center gap-2 text-sm text-slate-500 font-medium">
+<span>Settings</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-100">Localization</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 transition-colors">Discard Changes</button>
+<button class="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-lg text-sm font-bold shadow-sm shadow-primary/20 transition-all active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">save</span>
+                        Save Changes
+                    </button>
+</div>
+</header>
+<!-- Scrollable Settings Container -->
+<div class="flex-1 overflow-y-auto custom-scrollbar bg-background-light dark:bg-background-dark p-8">
+<div class="max-w-4xl mx-auto space-y-8 pb-12">
+<!-- Title Section -->
+<div class="space-y-1">
+<h2 class="text-2xl font-extrabold tracking-tight">Localization Settings</h2>
+<p class="text-slate-500">Manage regional formats, timezone synchronizations, and currency displays for your enterprise environment.</p>
+</div>
+<!-- Region Card -->
+<section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 bg-slate-50/50 dark:bg-slate-800/30">
+<span class="material-symbols-outlined text-primary">public</span>
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Regional Preferences</h3>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Default System Language</label>
+<div class="relative">
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm focus:ring-primary focus:border-primary appearance-none">
+<option value="en">English (United States)</option>
+<option value="es">Spanish (Spain)</option>
+<option value="fr">French (France)</option>
+<option value="de">German (Germany)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+<p class="text-xs text-slate-400 italic">Overrides user preferences if 'Force Global' is enabled.</p>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Date Format</label>
+<div class="relative">
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm focus:ring-primary focus:border-primary appearance-none">
+<option value="mmddyyyy">MM / DD / YYYY (US)</option>
+<option value="ddmmyyyy">DD / MM / YYYY (Global)</option>
+<option value="yyyymmdd">YYYY - MM - DD (ISO)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 pointer-events-none">calendar_today</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Time & Timezone Card -->
+<section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 bg-slate-50/50 dark:bg-slate-800/30">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Time &amp; Synchronization</h3>
+</div>
+<div class="p-6 space-y-6">
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">System Timezone</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-slate-400">search</span>
+<input class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:ring-primary focus:border-primary" placeholder="Search timezone (e.g. London, New York...)" type="text" value="UTC (Greenwich Mean Time)"/>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+<div class="space-y-0.5">
+<p class="text-sm font-bold">Auto-adjust for Daylight Saving Time</p>
+<p class="text-xs text-slate-500">Automatically switch between summer and winter time.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Currency & Finance Card -->
+<section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 bg-slate-50/50 dark:bg-slate-800/30">
+<span class="material-symbols-outlined text-primary">payments</span>
+<h3 class="font-bold text-slate-800 dark:text-slate-100">Currency &amp; Finance</h3>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Base System Currency</label>
+<div class="relative">
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm focus:ring-primary focus:border-primary appearance-none">
+<option value="usd">USD - United States Dollar ($)</option>
+<option value="eur">EUR - Euro (€)</option>
+<option value="gbp">GBP - British Pound (£)</option>
+<option value="jpy">JPY - Japanese Yen (¥)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Number Display Format</label>
+<div class="relative">
+<select class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 text-sm focus:ring-primary focus:border-primary appearance-none">
+<option value="dot">1,234,567.89 (Standard)</option>
+<option value="comma">1.234.567,89 (European)</option>
+<option value="space">1 234 567.89 (French/Scientific)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-slate-400 pointer-events-none">tag</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Slack Integration Preview Card -->
+<section class="bg-primary/5 border border-primary/20 rounded-xl p-6 flex flex-col md:flex-row items-center gap-6">
+<div class="w-16 h-16 bg-white dark:bg-slate-800 rounded-xl shadow-sm flex items-center justify-center shrink-0">
+<svg class="w-10 h-10" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zm1.263 0a2.527 2.527 0 0 1 2.522-2.52h6.313a2.527 2.527 0 1 1 0 5.043H8.827a2.528 2.528 0 0 1-2.522-2.523zM8.827 5.042a2.528 2.528 0 0 1-2.522-2.52A2.528 2.528 0 0 1 8.827 0a2.527 2.527 0 0 1 2.522 2.522v2.52h-2.522zm0 1.263a2.527 2.527 0 0 1 2.522 2.522v6.313a2.527 2.527 0 1 1-5.043 0V8.827a2.528 2.528 0 0 1 2.521-2.522zm10.121 3.784a2.528 2.528 0 0 1 2.522-2.522A2.528 2.528 0 0 1 24 8.827a2.527 2.527 0 0 1-2.522 2.522h-2.522V8.827zm-1.263 0a2.527 2.527 0 0 1-2.522 2.522H8.85a2.527 2.527 0 1 1 0-5.043h6.313a2.528 2.528 0 0 1 2.522 2.521zM15.165 18.948a2.528 2.528 0 0 1 2.522 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.522-2.522v-2.53h2.522zm0-1.263a2.527 2.527 0 0 1-2.522-2.522v-6.313a2.527 2.527 0 1 1 5.043 0v6.313a2.528 2.528 0 0 1-2.521 2.522z" fill="#4A154B"></path>
+</svg>
+</div>
+<div class="flex-1 text-center md:text-left">
+<h4 class="font-bold text-slate-900 dark:text-slate-100">Need localized notifications?</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400">Connect Slack to send automated system alerts in your team's preferred language.</p>
+</div>
+<button class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-bold shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                            Configure Slack
+                        </button>
+</section>
+</div>
+</div>
+<!-- Toast Notification Mockup -->
+<div class="fixed bottom-6 right-6 flex items-center gap-3 bg-slate-900 dark:bg-slate-800 text-white px-5 py-3 rounded-xl shadow-2xl border border-white/10 animate-fade-in">
+<span class="material-symbols-outlined text-green-400">check_circle</span>
+<span class="text-sm font-semibold">Automatic sync is active</span>
+<button class="ml-4 text-xs font-bold text-slate-400 hover:text-white underline decoration-primary">Dismiss</button>
+</div>
+</main>
+</div>
+</body></html>

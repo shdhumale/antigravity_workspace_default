@@ -1,0 +1,39 @@
+The project involves developing a full-stack application with a front end in Angular, middleware in Spring Boot microservices using JDK 21, and a back end with MySQL. The application aims to provide a user-friendly experience with robust functionalities for managing products and users. The core functional modules will include features like authentication, user management, product management, and advanced search capabilities, among others. 
+
+The objective is to create a detailed Product Requirement Document (PRD) that outlines the necessary specifications and modules needed for successful development. This PRD should ensure clarity in requirements and facilitate efficient collaboration among the development team.
+
+You have to outline the PRD by including the following key sections:
+1. Core Functional Modules
+   - Authentication & Authorization
+   - User Management
+   - Product Management
+   - Feature Management
+   - Search & Filtering
+   - Dashboard
+2. Supporting Modules
+   - Audit & Logging
+   - Notifications
+   - API Layer
+   - Data Validation
+3. Advanced/Optional Modules
+   - Analytics & Reporting
+   - Workflow/Approval
+   - Versioning
+   - Integration
+4. Non-Functional Modules
+   - Security
+   - Scalability
+   - Performance Monitoring
+   - Localization
+
+Each section should provide:
+a) a brief description of the module and its purpose
+b) specific functionalities and requirements 
+c) any technical constraints or considerations 
+d) user roles and permissions related to the modules
+
+Ensure that the PRD is comprehensive enough to guide the development team throughout the project lifecycle while being easily understandable for stakeholders.
+
+Assume that the development team has experience with Angular, Spring Boot, and MySQL, and that they can commit to a timeline of __________ months for the application development. The team consists of __________ developers specializing in front end, middleware, and back end.
+
+I want you to deliver a well-structured PRD for the full-stack application, organized according to the specified sections, and detailed enough to serve as a clear roadmap for the development process.

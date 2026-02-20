@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Management Inventory Listing</title>
+<!-- Tailwind CSS with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Manrope -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between gap-8">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">inventory_2</span>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">IMS Pro</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-semibold text-primary" href="#">Dashboard</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Inventory</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Orders</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/50 transition-all outline-none" placeholder="Quick search products, SKUs, or categories..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary/10 border border-primary/20 overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="User profile avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIP6sz-jusJ2tZc5e9wDeTH3i16z5c7HGrtHYVNm8B0Hp9p9X9TsU5fMxcZLkv6sTXyK80WPVTMEsUM49pkvWZVjCUV1LRLdGrCR18Hv5NEL82hz8rUNQOv1U96HyXexzbI-AyeqUsqySUiwsveQ4XUDmEFf7Nn-p-dKdQEqqQqIIWYOaFu8ohFh3MtFOFnbWpJs3kpf4mFA9UVhHYjfTAhCsdQCV4mw4sv8DaKzMRQHsLgyBQtqF688x5G3hHoR_OhPtRuqPpOA"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto px-6 py-8">
+<!-- Page Header & Main Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<div>
+<h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Product Inventory</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Manage your global product catalog and stock levels.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg text-slate-500">upload_file</span>
+<span>Export CSV</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg">add</span>
+<span>Add Product</span>
+</button>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6 bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-lg text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">list</span>
+                    All Products
+                </button>
+<button class="flex items-center gap-2 px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                    Active
+                </button>
+<button class="flex items-center gap-2 px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-sm">warning</span>
+                    Low Stock
+                </button>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-2"></div>
+<button class="flex items-center gap-2 px-3 py-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-sm">filter_alt</span>
+                    Category
+                    <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-400 font-medium hidden sm:block">Sorted by: Newest First</span>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500">
+<span class="material-symbols-outlined">sort</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500">
+<span class="material-symbols-outlined">view_column</span>
+</button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden @container">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider w-16">Image</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider min-w-[240px]">Product Name</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">SKU</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Category</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Price</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="h-12 w-12 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden flex items-center justify-center">
+<img class="object-cover w-full h-full" data-alt="High-end smartphone product thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHPEOHwndZ1_Ab5Q4wsdTa3KT4oGsH5JQGyvo4KF0zseqHTIZAxVgNt1_fGhd7uo81s7QHVOVzBuGQYRcqtH0rrhiFUDerGwyq_YD9Fb_lsP8iMiR5xBnKu0RzSWEWKapl9vH7ieqq-Jn5SPAGbaQ5VQGcOQn37eButODIyrtaqeqNekABifMz5_foPjnPkPxR6iNs_aI9NTbImgPjHzBQONl3bammHoWWT3RrLetRdiZIfgWkGG4oh08jpaPjk88j1BmytTeiHg"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">UltraVision Pro Max 5G</span>
+<span class="text-xs text-slate-500">Limited Edition Blue</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">TECH-UV-9981</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">Electronics</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-sm font-bold text-slate-900 dark:text-white">$1,199.00</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">Active</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-red-500">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="h-12 w-12 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden flex items-center justify-center">
+<img class="object-cover w-full h-full" data-alt="Over-ear wireless headphones product thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJmAw_8qGK-hAjiWxh6Of93Byn1uuGaG10E6W1enEMhScmVm8DfhMeD9g2-AtIkSNTWYtTBzZ52EkfiWQ-b__Lrl4EQNjceEjaR4YwSibiYkrIfn7vcdObw5gq_UokMeaEqI_l9bAT34snGDZBrgZ8T72fhJrowHSjwOpDMGiwMviOAZ8OReZrw_gfPtD2jxZ2JlhsyyY21ZROdkzUE-n0qQH0shfkJVMyqO7mhHxvf2Z4898ULevfxdcWm1WtZt9OAv02lthD4A"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">SonicBlast Studio ANC</span>
+<span class="text-xs text-slate-500">Obsidian Black</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">AUD-SB-4402</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">Electronics</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-sm font-bold text-slate-900 dark:text-white">$249.50</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">Active</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-red-500">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="h-12 w-12 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden flex items-center justify-center">
+<img class="object-cover w-full h-full" data-alt="Canvas urban backpack product thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7GJfFRq7NzFkd0_FNncx5Z-OXiXimzPHCUSL3dHEF_dEA-QHc-z2s4II7O8ZcvYHFmD0QsZ8YkHV0VP-nVeY5_RNIkMKZJIdp6ZKNDnW2VgERs3g5ksNS5JQ0ma-QwwbAMSzeXv7YlBQd7J3LBLFeb_5MP1jk44ucfd0s_44ORdb_mCXWXUqpuGQ_wO_38dhlxxaflJFN9FeKhoNWOiTTrFS5_YtEQpstPULVTiBUyTr-tE6LAOAQNnhrYLninDC6gUj0YQmK-w"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Vanguard Urban Rucksack</span>
+<span class="text-xs text-slate-500">Waterproof Canvas</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">ACC-VG-1009</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400">Accessories</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-sm font-bold text-slate-900 dark:text-white">$85.00</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<div class="h-2 w-2 rounded-full bg-slate-400"></div>
+<span class="text-xs font-bold text-slate-500 dark:text-slate-400">Inactive</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-red-500">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="h-12 w-12 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden flex items-center justify-center">
+<img class="object-cover w-full h-full" data-alt="Mechanical gaming keyboard product thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy1weQo7_c663NVoLF14SAN5zpRP18u4MeoF6NoEO08SvuFdeIiiEjH9b75CyfFzsOXSRIh0U6HXT32EeZfjvTANni3zicGsCxJV-i7aclhsZCPFJ9cc2e9QfmVclFhxplehElaWGroDyEybhyHL6ZeIUSpb2meKdvZzUwwHNQUWdiJOIytlDQ-v8Bd48Dke1nkKUhs1_YzGzgFqGCcTTNZlU11bBNomXhOoqY7p7_GK9VBIrkQGvPVzvBtjHuaFbKoImlay6bxQ"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">Titan Key RGB Mechanical</span>
+<span class="text-xs text-slate-500">Cherry MX Brown</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">PC-TK-0021</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">Electronics</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-sm font-bold text-slate-900 dark:text-white">$159.99</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">Active</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-red-500">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group border-b-0">
+<td class="px-6 py-4">
+<div class="h-12 w-12 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 overflow-hidden flex items-center justify-center">
+<img class="object-cover w-full h-full" data-alt="Lightweight running shoes product thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEEmo15Nk8tPD7B9sz2ze6isqq44pCw7CHGQdNZbZBqNc6yzrABhtJ4u0kGgIedHj0KQ8txYbcgjnbKKr4QTwnr9rt5BGmDbroVYEzhPb1JeKyzSmZLDtgOdEgW_wCv6tqnmopIRHAQtwc_35VC1ESkuB45zvdtTDSYkEWtFvEir1JPywX0npbBoIJM_4wRvVDzgEcZWdEoVl2Lf6ESURQz5766b0nFDQWc9pc4aX8-Uz3LPLBfutEd6D0Vwpmv7Q4UKQW7Fwfow"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">AeroStride Running Shoes</span>
+<span class="text-xs text-slate-500">Carbon Fiber Sole</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">SH-AS-7721</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400">Apparel</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="text-sm font-bold text-slate-900 dark:text-white">$120.00</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1.5">
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+<span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">Active</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="p-1.5 hover:bg-white dark:hover:bg-slate-700 rounded shadow-sm text-red-500">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Rows per page:</span>
+<select class="bg-transparent border-none text-xs font-bold text-slate-700 dark:text-slate-300 focus:ring-0 p-0 cursor-pointer">
+<option>10</option>
+<option>25</option>
+<option>50</option>
+</select>
+</div>
+<div class="flex items-center gap-6">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">1-5 of 124 products</span>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-xl">chevron_left</span>
+</button>
+<button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-xl">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- System Stats Footer -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Total Products</p>
+<p class="text-2xl font-black mt-1 text-slate-900 dark:text-white">1,248</p>
+</div>
+<div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Active Inventory</p>
+<p class="text-2xl font-black mt-1 text-slate-900 dark:text-white">1,192</p>
+</div>
+<div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Low Stock Alerts</p>
+<p class="text-2xl font-black mt-1 text-amber-500">14</p>
+</div>
+<div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Total Value</p>
+<p class="text-2xl font-black mt-1 text-primary">$412.5k</p>
+</div>
+</div>
+</main>
+</body></html>

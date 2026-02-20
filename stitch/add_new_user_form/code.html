@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add New User Form</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 sticky top-0 z-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-slate-100">
+<div class="bg-primary text-white p-1.5 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">layers</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">Enterprise Manager</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-semibold leading-normal border-b-2 border-primary py-4 -mb-4" href="#">Users</a>
+<a class="text-slate-600 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Projects</a>
+<a class="text-slate-600 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg px-3 py-1.5 gap-2 border border-transparent focus-within:border-primary transition-all">
+<span class="material-symbols-outlined text-slate-400 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 text-slate-900 dark:text-slate-100 placeholder:text-slate-400" placeholder="Search team members..." type="text"/>
+</div>
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 overflow-hidden">
+<img alt="User Profile" class="h-full w-full object-cover" data-alt="Avatar of the current administrator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABNV_zQmBG76NEGAx_yBDgE7aLxchqt8OQLRJsy28b4jJJYGAeAX4KIelvNoWJdTTqBZyOFyvGHRcgZhtCpNG9u0TaoAVXZTjyAfKEzTReBbshMCtimpy62K25BuaFGOmPHBmwfvX8hep0jel-1SQfK9adToeWJYFk3lXBUReRAXS8n83xIx34TFUFF888ylBj495xEmrNT1hL1U0F4lO2WDzkiMJiqnC6-zmhYEDhMlYZM1QNMP8yeNuWnL-BJhdZrpWTEKPu5g"/>
+</div>
+</div>
+</header>
+<!-- Main Content / Modal Backdrop -->
+<main class="flex-1 flex items-center justify-center p-4 sm:p-6 bg-slate-900/5 dark:bg-black/40">
+<!-- Add New User Modal -->
+<div class="bg-white dark:bg-slate-900 w-full max-w-xl rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<!-- Modal Header -->
+<div class="px-8 pt-8 pb-4 flex justify-between items-start">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Add New User</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Invite a new member to your team to start collaborating.</p>
+</div>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form class="p-8 space-y-6">
+<!-- Name Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="first_name">First Name</label>
+<input class="rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-primary focus:ring-primary/20 transition-all px-4 py-2.5" id="first_name" placeholder="e.g. John" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="last_name">Last Name</label>
+<input class="rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-primary focus:ring-primary/20 transition-all px-4 py-2.5" id="last_name" placeholder="e.g. Doe" type="text"/>
+</div>
+</div>
+<!-- Email Field -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">mail</span>
+<input class="w-full rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-primary focus:ring-primary/20 transition-all pl-10 pr-4 py-2.5" id="email" placeholder="john.doe@enterprise.com" type="email"/>
+</div>
+</div>
+<!-- Role Selection -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="role">Role Selection</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">shield_person</span>
+<select class="w-full appearance-none rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:border-primary focus:ring-primary/20 transition-all pl-10 pr-4 py-2.5" id="role">
+<option disabled="" selected="" value="">Select a role</option>
+<option value="admin">Administrator</option>
+<option value="pm">Product Manager</option>
+<option value="dev">Developer</option>
+<option value="stakeholder">Stakeholder</option>
+<option value="viewer">Viewer</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Invitation Toggle -->
+<div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 text-primary p-2 rounded-full">
+<span class="material-symbols-outlined">send</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-slate-100 leading-tight">Send invitation email</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">User will receive login credentials via email.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none dark:bg-slate-700 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Form Footer Buttons -->
+<div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+<button class="px-5 py-2.5 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" type="button">
+                        Cancel
+                    </button>
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 hover:-translate-y-0.5 active:translate-y-0 transition-all" type="submit">
+<span>Create User</span>
+<span class="material-symbols-outlined text-lg">person_add</span>
+</button>
+</div>
+</form>
+</div>
+</main>
+<!-- Simple Breadcrumb Footer for Context -->
+<footer class="px-6 py-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 text-xs font-medium text-slate-400 dark:text-slate-500">
+<a class="hover:text-primary transition-colors" href="#">Settings</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">User Management</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-100">Add New User</span>
+</div>
+</footer>
+</body></html>

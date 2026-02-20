@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Advanced Analytics and Reporting - Enterprise PMS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 flex flex-col bg-background-light dark:bg-background-dark shrink-0">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary p-1.5 rounded-lg text-white">
+<span class="material-symbols-outlined text-2xl">layers</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Enterprise PMS</h2>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500">inventory_2</span>
+<span class="font-medium text-sm">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-medium text-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500">assessment</span>
+<span class="font-medium text-sm">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500">settings</span>
+<span class="font-medium text-sm">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsXgJgYEfLnHIcQ-mccrlJXPiizP_tz-GZxs-nbj3oVi_QuzUPiT08JwpetMS-ChwTR-pWumjWnfKCKtLMEE5NX8pUikqDemzwMm7PO6NCbOCzXV0KCl6mknT_cjSY1LC0ywZkLHgFbQXB2LfOA7J5h1QMnOueesMeLxV43UkzaaF8EyxHOSSNuTklQOqbi5-eTWnwTz-Gf-tVw5ey2F_N-sriIdwCCFAGao94kcQPcEoLuewRstRYgde7liHiQiZldX7mqYbGRw"/>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-xs font-bold truncate">Alex Morgan</p>
+<p class="text-[10px] text-slate-500 truncate">System Admin</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-30 flex items-center justify-between px-8 py-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur border-b border-slate-200 dark:border-slate-800">
+<div>
+<h1 class="text-2xl font-extrabold tracking-tight">Advanced Analytics</h1>
+<p class="text-sm text-slate-500">Real-time product performance insights</p>
+</div>
+<div class="flex items-center gap-4">
+<!-- Date Range Picker Mockup -->
+<div class="flex items-center gap-2 bg-slate-200 dark:bg-slate-800 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 cursor-pointer">
+<span class="material-symbols-outlined text-slate-500 text-lg">calendar_today</span>
+<span class="text-sm font-medium">Oct 1, 2023 - Oct 31, 2023</span>
+<span class="material-symbols-outlined text-slate-500 text-sm">expand_more</span>
+</div>
+<button class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-lg font-bold text-sm transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg">download</span>
+                        Export Report
+                    </button>
+<button class="p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<div class="p-8 space-y-8 max-w-7xl mx-auto">
+<!-- KPI Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="p-6 rounded-xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">payments</span>
+<span class="text-emerald-500 text-xs font-bold flex items-center">+12.5% <span class="material-symbols-outlined text-xs">trending_up</span></span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Total Revenue</p>
+<h3 class="text-2xl font-black mt-1">$1.24M</h3>
+</div>
+<div class="p-6 rounded-xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-indigo-500 bg-indigo-500/10 p-2 rounded-lg">group</span>
+<span class="text-rose-500 text-xs font-bold flex items-center">-2.1% <span class="material-symbols-outlined text-xs">trending_down</span></span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Active Users</p>
+<h3 class="text-2xl font-black mt-1">45.8k</h3>
+</div>
+<div class="p-6 rounded-xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-amber-500 bg-amber-500/10 p-2 rounded-lg">inventory</span>
+<span class="text-emerald-500 text-xs font-bold flex items-center">+5.3% <span class="material-symbols-outlined text-xs">trending_up</span></span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Inventory Items</p>
+<h3 class="text-2xl font-black mt-1">12,403</h3>
+</div>
+<div class="p-6 rounded-xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-teal-500 bg-teal-500/10 p-2 rounded-lg">shopping_cart</span>
+<span class="text-emerald-500 text-xs font-bold flex items-center">+0.8% <span class="material-symbols-outlined text-xs">trending_up</span></span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Conversion Rate</p>
+<h3 class="text-2xl font-black mt-1">3.2%</h3>
+</div>
+</div>
+<!-- Main Chart Section -->
+<div class="p-6 rounded-xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h2 class="text-lg font-bold">Product Sales Trends</h2>
+<p class="text-sm text-slate-500">Performance tracking over the current month</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs font-bold rounded bg-primary text-white">Monthly</button>
+<button class="px-3 py-1 text-xs font-bold rounded bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600">Weekly</button>
+</div>
+</div>
+<div class="relative h-[300px] w-full mt-4">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 300">
+<!-- Grid Lines -->
+<line class="text-slate-100 dark:text-slate-800" stroke="currentColor" stroke-width="1" x1="0" x2="1000" y1="50" y2="50"></line>
+<line class="text-slate-100 dark:text-slate-800" stroke="currentColor" stroke-width="1" x1="0" x2="1000" y1="150" y2="150"></line>
+<line class="text-slate-100 dark:text-slate-800" stroke="currentColor" stroke-width="1" x1="0" x2="1000" y1="250" y2="250"></line>
+<!-- Main Area Chart -->
+<path d="M0,220 C100,220 150,50 250,50 C350,50 400,180 500,180 C600,180 650,80 750,80 C850,80 900,200 1000,200 V300 H0 Z" fill="url(#chartGradient)"></path>
+<path d="M0,220 C100,220 150,50 250,50 C350,50 400,180 500,180 C600,180 650,80 750,80 C850,80 900,200 1000,200" fill="none" stroke="#137fec" stroke-linecap="round" stroke-width="4"></path>
+<!-- Data Points -->
+<circle cx="250" cy="50" fill="#137fec" r="6" stroke="white" stroke-width="2"></circle>
+<circle cx="750" cy="80" fill="#137fec" r="6" stroke="white" stroke-width="2"></circle>
+<defs>
+<lineargradient id="chartGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#137fec" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#137fec" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<div class="flex justify-between mt-4 px-2">
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Oct 01</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Oct 08</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Oct 15</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Oct 22</span>
+<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Oct 30</span>
+</div>
+</div>
+<!-- Bottom Row Grids -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Pie Chart: Inventory Distribution -->
+<div class="p-6 rounded-xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+<h2 class="text-lg font-bold mb-6">Inventory Distribution</h2>
+<div class="flex items-center gap-12">
+<div class="relative w-48 h-48 shrink-0">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#137fec" stroke-dasharray="125 251" stroke-width="20"></circle>
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#a855f7" stroke-dasharray="60 251" stroke-dashoffset="-125" stroke-width="20"></circle>
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#14b8a6" stroke-dasharray="66 251" stroke-dashoffset="-185" stroke-width="20"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-2xl font-black">12.4k</span>
+<span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Total</span>
+</div>
+</div>
+<div class="flex-1 space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-sm font-medium">Electronics</span>
+</div>
+<span class="text-sm font-bold">50%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-purple-500"></div>
+<span class="text-sm font-medium">Software</span>
+</div>
+<span class="text-sm font-bold">24%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-teal-500"></div>
+<span class="text-sm font-medium">Apparel</span>
+</div>
+<span class="text-sm font-bold">26%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bar Chart: User Activity -->
+<div class="p-6 rounded-xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-lg font-bold">User Activity</h2>
+<select class="text-xs font-bold bg-slate-100 dark:bg-slate-700 border-none rounded-lg focus:ring-primary py-1 px-3">
+<option>Last 7 Days</option>
+<option>Last 14 Days</option>
+</select>
+</div>
+<div class="flex items-end justify-between h-48 gap-3 mt-8">
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-md h-[40%] group relative cursor-pointer hover:bg-primary/40 transition-colors">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">12k</div>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Mon</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-md h-[60%] group relative cursor-pointer hover:bg-primary/40 transition-colors">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">18k</div>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Tue</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-md h-[85%] group relative cursor-pointer hover:bg-primary/40 transition-colors">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">25k</div>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Wed</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/60 rounded-t-md h-[100%] group relative cursor-pointer hover:bg-primary transition-colors">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">30k</div>
+</div>
+<span class="text-[10px] font-bold text-primary uppercase">Thu</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-md h-[70%] group relative cursor-pointer hover:bg-primary/40 transition-colors">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">21k</div>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Fri</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-md h-[30%] group relative cursor-pointer hover:bg-primary/40 transition-colors">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">9k</div>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Sat</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary/20 rounded-t-md h-[25%] group relative cursor-pointer hover:bg-primary/40 transition-colors">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">7k</div>
+</div>
+<span class="text-[10px] font-bold text-slate-500 uppercase">Sun</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer / Status Bar -->
+<footer class="flex items-center justify-between text-[11px] font-bold text-slate-500 uppercase tracking-widest pt-8 border-t border-slate-200 dark:border-slate-700">
+<div class="flex items-center gap-4">
+<span>Last sync: 2 minutes ago</span>
+<div class="flex items-center gap-1.5 text-emerald-500">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                            System Online
+                        </div>
+</div>
+<div>
+                        © 2023 Enterprise PMS Analytics
+                    </div>
+</footer>
+</div>
+</main>
+</div>
+</body></html>
