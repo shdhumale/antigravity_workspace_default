@@ -30,13 +30,15 @@ public class GlobalExceptionHandler {
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.toList());
         
-        return ApiErrorResponse.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .code("VALIDATION_ERROR")
-                .message("Input validation failed")
-                .details(details)
-                .timestamp(LocalDateTime.now())
-                .let(it -> ResponseEntity.badRequest().body(it)); // Using fluent builder style would work but let's be explicit
+        return ResponseEntity.badRequest().body(
+                ApiErrorResponse.builder()
+                        .status(HttpStatus.BAD_REQUEST.value())
+                        .code("VALIDATION_ERROR")
+                        .message("Input validation failed")
+                        .details(details)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
 
     @ExceptionHandler(Exception.class)
