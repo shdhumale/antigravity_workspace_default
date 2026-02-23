@@ -10,4 +10,7 @@
     <include file="db/changelog/changesets/002-create-refresh-tokens.xml"/>
     <include file="db/changelog/changesets/003-create-products.xml"/>
     <include file="db/changelog/changesets/004-add-fts.xml"/>
+    <include file="db/changelog/changesets/006-create-audit-log.xml"/>
+    <include file="db/changelog/changesets/007-create-notifications.xml"/>
+    <include file="db/changelog/changesets/008-create-approval-requests.xml"/>
 </databaseChangeLog>

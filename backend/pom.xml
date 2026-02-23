@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.x</version> <!-- User will finalize to exact 3.3.x -->
+		<version>3.3.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.productmgmt</groupId>
@@ -19,6 +19,13 @@
 		<jjwt.version>0.12.5</jjwt.version>
 		<bucket4j.version>8.10.1</bucket4j.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -87,9 +94,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.github.vladimir-bukhtoyarov</groupId>
+			<groupId>com.bucket4j</groupId>
 			<artifactId>bucket4j-core</artifactId>
-			<version>${bucket4j.version}</version>
+			<version>8.10.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.ben-manes.caffeine</groupId>

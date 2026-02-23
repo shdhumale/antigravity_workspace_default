@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="008-create-approval-requests" author="antigravity">
+        <createTable tableName="approval_requests">
+            <column name="id" type="char(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="product_id" type="char(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="requested_by" type="char(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reviewed_by" type="char(36)"/>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="text"/>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resolved_at" type="datetime"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="approval_requests" baseColumnNames="product_id"
+                                 constraintName="fk_approval_prod" referencedTableName="products"
+                                 referencedColumnNames="id" onDelete="CASCADE"/>
+        
+        <addForeignKeyConstraint baseTableName="approval_requests" baseColumnNames="requested_by"
+                                 constraintName="fk_approval_requester" referencedTableName="users"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="approval_requests" baseColumnNames="reviewed_by"
+                                 constraintName="fk_approval_reviewer" referencedTableName="users"
+                                 referencedColumnNames="id"/>
+
+        <createIndex tableName="approval_requests" indexName="idx_approval_product">
+            <column name="product_id"/>
+        </createIndex>
+        <createIndex tableName="approval_requests" indexName="idx_approval_status">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

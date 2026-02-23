@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="007-create-notifications" author="antigravity">
+        <createTable tableName="notifications">
+            <column name="id" type="char(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="recipient_id" type="char(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_type" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="body" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_read" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="read_at" type="datetime"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="notifications" baseColumnNames="recipient_id"
+                                 constraintName="fk_notif_recipient" referencedTableName="users"
+                                 referencedColumnNames="id" onDelete="CASCADE"/>
+
+        <createIndex tableName="notifications" indexName="idx_notif_recipient">
+            <column name="recipient_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
