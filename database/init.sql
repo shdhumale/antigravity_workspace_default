@@ -12,7 +12,7 @@ USE productmgmt;
 CREATE TABLE IF NOT EXISTS users (
     id VARCHAR(36) PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     role ENUM('ADMIN', 'MANAGER', 'VIEWER') NOT NULL DEFAULT 'VIEWER',
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS approval_requests (
 
 -- Insert Initial Admin User
 -- Password: 'AdminPassword123!' (Pre-hashed with BCrypt, 12 rounds)
-INSERT INTO users (id, email, password_hash, first_name, last_name, role, is_active, created_at, updated_at)
+INSERT INTO users (id, email, password, first_name, last_name, role, is_active, created_at, updated_at)
 VALUES (
     UUID(), 
     'admin@productmgmt.com', 

@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "first_name")
@@ -64,7 +64,7 @@ public class User implements UserDetails {
     private LocalDateTime deletedAt;
 
     public enum Role {
-        SUPER_ADMIN, MANAGER, VIEWER
+        ADMIN, SUPER_ADMIN, MANAGER, VIEWER
     }
 
     @Override

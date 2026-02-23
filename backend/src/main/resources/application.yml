@@ -37,7 +37,7 @@ spring:
       spec: expireAfterWrite=60m,maximumSize=100
 
 server:
-  port: 8080
+  port: 8082
   error:
     include-message: always
     include-binding-errors: always
