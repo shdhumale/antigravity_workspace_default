@@ -1,8 +1,6 @@
 package com.productmgmt.user;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.productmgmt.user.controller.UserController;
-import com.productmgmt.user.model.User;
 import com.productmgmt.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

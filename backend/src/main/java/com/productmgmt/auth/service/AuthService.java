@@ -9,7 +9,6 @@ import com.productmgmt.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,55 +19,57 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserRepository userRepository;
-    private final RefreshTokenRepository refreshTokenRepository;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
+        private final UserRepository userRepository;
+        private final RefreshTokenRepository refreshTokenRepository;
+        private final JwtService jwtService;
+        private final AuthenticationManager authenticationManager;
 
-    @Transactional
-    public LoginResponse login(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-        );
+        @Transactional
+        public LoginResponse login(LoginRequest request) {
+                authenticationManager.authenticate(
+                                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                User user = userRepository.findByEmail(request.getEmail())
+                                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String accessToken = jwtService.generateToken(user);
-        String refreshToken = jwtService.generateRefreshToken(user);
+                String accessToken = jwtService.generateToken(user);
+                String refreshToken = jwtService.generateRefreshToken(user);
 
-        saveRefreshToken(user, refreshToken);
+                saveRefreshToken(user, refreshToken);
 
-        return LoginResponse.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .user(LoginResponse.UserInfo.builder()
-                        .id(user.getId().toString())
-                        .email(user.getEmail())
-                        .firstName(user.getFirstName())
-                        .lastName(user.getLastName())
-                        .role(user.getRole().name())
-                        .build())
-                .build();
-    }
+                return LoginResponse.builder()
+                                .accessToken(accessToken)
+                                .refreshToken(refreshToken)
+                                .user(LoginResponse.UserInfo.builder()
+                                                .id(user.getId().toString())
+                                                .email(user.getEmail())
+                                                .firstName(user.getFirstName())
+                                                .lastName(user.getLastName())
+                                                .role(user.getRole().name())
+                                                .build())
+                                .build();
+        }
 
-    private void saveRefreshToken(User user, String token) {
-        RefreshToken refreshToken = RefreshToken.builder()
-                .user(user)
-                .tokenHash(token) // In real world, hash this
-                .issuedAt(Instant.now())
-                .expiresAt(Instant.now().plusMillis(jwtService.extractClaim(token, claims -> claims.getExpiration().getTime() - System.currentTimeMillis())))
-                .build();
-        refreshTokenRepository.save(refreshToken);
-    }
+        private void saveRefreshToken(User user, String token) {
+                RefreshToken refreshToken = RefreshToken.builder()
+                                .id(UUID.randomUUID().toString())
+                                .user(user)
+                                .tokenHash(token) // In real world, hash this
+                                .issuedAt(Instant.now())
+                                .expiresAt(Instant.now()
+                                                .plusMillis(jwtService.extractClaim(token,
+                                                                claims -> claims.getExpiration().getTime()
+                                                                                - System.currentTimeMillis())))
+                                .build();
+                refreshTokenRepository.save(refreshToken);
+        }
 
-    @Transactional
-    public void logout(String refreshToken) {
-        refreshTokenRepository.findByTokenHash(refreshToken)
-                .ifPresent(token -> {
-                    token.setRevokedAt(Instant.now());
-                    refreshTokenRepository.save(token);
-                });
-    }
+        @Transactional
+        public void logout(String refreshToken) {
+                refreshTokenRepository.findByTokenHash(refreshToken)
+                                .ifPresent(token -> {
+                                        token.setRevokedAt(Instant.now());
+                                        refreshTokenRepository.save(token);
+                                });
+        }
 }

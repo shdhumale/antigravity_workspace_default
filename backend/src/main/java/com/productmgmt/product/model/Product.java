@@ -67,7 +67,8 @@ public class Product {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
-        if (status == null) status = ProductStatus.DRAFT;
+        if (status == null)
+            status = ProductStatus.DRAFT;
     }
 
     @PreUpdate
