@@ -58,6 +58,10 @@ export class ProductService {
     return this.http.post<void>(`${this.apiUrl}/${id}/approve`, {});
   }
 
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>('/api/v1/categories');
+  }
+
   searchProducts(query: string): void {
     this.isLoading.set(true);
     this.http.get<Product[]>(`/api/v1/search/products?q=\${query}`).subscribe({

@@ -7,11 +7,18 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (authService.isAuthenticated()) {
-    // Check role if needed
+    const userRole = authService.currentUser()?.role;
     const expectedRole = route.data['role'];
-    if (expectedRole && authService.currentUser()?.role !== expectedRole && authService.currentUser()?.role !== 'SUPER_ADMIN') {
-      router.navigate(['/unauthorized']);
-      return false;
+
+    if (expectedRole) {
+      const roles = ['VIEWER', 'MANAGER', 'ADMIN', 'SUPER_ADMIN'];
+      const userLevel = roles.indexOf(userRole || '');
+      const requiredLevel = roles.indexOf(expectedRole);
+
+      if (userLevel < requiredLevel) {
+        router.navigate(['/dashboard']);
+        return false;
+      }
     }
     return true;
   }

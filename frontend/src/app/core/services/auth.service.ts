@@ -6,6 +6,8 @@ import { Observable, tap, catchError, throwError, of, map } from 'rxjs';
 export interface User {
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
   role: string;
 }
 

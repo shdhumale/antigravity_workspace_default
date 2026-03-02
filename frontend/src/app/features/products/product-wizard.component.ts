@@ -52,12 +52,21 @@ import { ProductService, Category } from '../../core/services/product.service';
                   Basic Information
                 </h3>
                 <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-semibold text-slate-700">Product Name *</label>
-                  <input name="name" [(ngModel)]="product.name" required class="w-full rounded-lg border-slate-300 py-2.5 px-4 outline-none focus:ring-2 focus:ring-blue-500/20" placeholder="e.g. Quantum Flux Headphones"/>
+                  <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Product Name *</label>
+                  <input name="name" [(ngModel)]="product.name" required class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 outline-none focus:ring-2 focus:ring-blue-500/20" placeholder="e.g. Quantum Flux Headphones"/>
                 </div>
                 <div class="flex flex-col gap-1.5">
-                  <label class="text-sm font-semibold text-slate-700">Description</label>
-                  <textarea name="description" [(ngModel)]="product.description" rows="4" class="w-full rounded-lg border-slate-300 p-4 outline-none" placeholder="Product features..."></textarea>
+                  <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Category *</label>
+                  <select name="category" [(ngModel)]="product.category.id" required class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 outline-none focus:ring-2 focus:ring-blue-500/20">
+                    <option value="" disabled>Select a category</option>
+                    @for (cat of categories; track cat.id) {
+                      <option [value]="cat.id">{{ cat.name }}</option>
+                    }
+                  </select>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Description</label>
+                  <textarea name="description" [(ngModel)]="product.description" rows="4" class="w-full bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg p-4 outline-none" placeholder="Product features..."></textarea>
                 </div>
               </div>
             }
@@ -105,20 +114,28 @@ import { ProductService, Category } from '../../core/services/product.service';
   `,
   styleUrls: []
 })
-export class ProductWizardComponent {
+export class ProductWizardComponent implements OnInit {
   productService = inject(ProductService);
   router = inject(Router);
 
   currentStep = 1;
   totalSteps = 2;
+  categories: Category[] = [];
 
   product: any = {
     name: '',
     description: '',
     price: 0,
     inventoryQty: 0,
+    category: { id: '' },
     status: 'DRAFT'
   };
+
+  ngOnInit(): void {
+    this.productService.getCategories().subscribe(cats => {
+      this.categories = cats;
+    });
+  }
 
   next(): void {
     if (this.currentStep < this.totalSteps) this.currentStep++;
@@ -129,7 +146,9 @@ export class ProductWizardComponent {
   }
 
   save(): void {
-    this.productService.createProduct(this.product).subscribe(() => {
+    const payload = { ...this.product };
+    // The backend expects category object with id
+    this.productService.createProduct(payload).subscribe(() => {
       this.router.navigate(['/products']);
     });
   }
