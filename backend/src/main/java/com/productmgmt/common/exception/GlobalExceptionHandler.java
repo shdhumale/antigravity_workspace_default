@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,9 +20,22 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.UNAUTHORIZED, "AUTH_INVALID_CREDENTIALS", "Invalid email or password");
     }
 
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiErrorResponse> handleAuthentication(AuthenticationException ex) {
+        return buildResponse(HttpStatus.UNAUTHORIZED, "AUTH_REQUIRED",
+                "Full authentication is required: " + ex.getMessage());
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiErrorResponse> handleAccessDenied(AccessDeniedException ex) {
-        return buildResponse(HttpStatus.FORBIDDEN, "AUTH_INSUFFICIENT_PERMISSIONS", "You do not have permission to access this resource");
+        org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder
+                .getContext().getAuthentication();
+        String message = "Permission denied";
+        if (auth != null) {
+            message += " for user " + auth.getName() + " with authorities " + auth.getAuthorities();
+        }
+        return buildResponse(HttpStatus.FORBIDDEN, "AUTH_INSUFFICIENT_PERMISSIONS",
+                message + ": " + ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -29,7 +43,7 @@ public class GlobalExceptionHandler {
         var details = ex.getBindingResult().getFieldErrors().stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.toList());
-        
+
         return ResponseEntity.badRequest().body(
                 ApiErrorResponse.builder()
                         .status(HttpStatus.BAD_REQUEST.value())
@@ -37,13 +51,13 @@ public class GlobalExceptionHandler {
                         .message("Input validation failed")
                         .details(details)
                         .timestamp(LocalDateTime.now())
-                        .build()
-        );
+                        .build());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorResponse> handleGeneral(Exception ex) {
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "SYSTEM_ERROR", "An unexpected error occurred: " + ex.getMessage());
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "SYSTEM_ERROR",
+                "An unexpected error occurred: " + ex.getMessage());
     }
 
     private ResponseEntity<ApiErrorResponse> buildResponse(HttpStatus status, String code, String message) {

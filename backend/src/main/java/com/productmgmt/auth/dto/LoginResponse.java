@@ -1,6 +1,5 @@
 package com.productmgmt.auth.dto;
 
-import com.productmgmt.user.model.User;
 import lombok.Builder;
 import lombok.Data;
 

@@ -16,6 +16,7 @@ public class AuditService {
     private final AuditLogRepository auditLogRepository;
 
     @Async
+    @SuppressWarnings("null")
     public void log(String entityType, String entityId, String action, UUID actorId, String oldValue, String newValue) {
         AuditLog entry = AuditLog.builder()
                 .entityType(entityType)

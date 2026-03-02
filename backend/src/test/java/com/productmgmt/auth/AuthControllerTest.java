@@ -31,6 +31,7 @@ public class AuthControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
+    @SuppressWarnings("null")
     public void login_ShouldReturnTokens_WhenCredentialsAreValid() throws Exception {
         LoginRequest request = new LoginRequest();
         request.setEmail("admin@example.com");

@@ -24,6 +24,7 @@ public class UserService {
                 .toList();
     }
 
+    @SuppressWarnings("null")
     public User findById(UUID id) {
         return userRepository.findById(id)
                 .filter(u -> u.getDeletedAt() == null)

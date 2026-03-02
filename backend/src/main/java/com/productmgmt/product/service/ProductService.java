@@ -3,7 +3,7 @@ package com.productmgmt.product.service;
 import com.productmgmt.product.model.Product;
 import com.productmgmt.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,17 +20,20 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     public Product findById(UUID id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
     @Transactional
+    @SuppressWarnings("null")
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
 
     @Transactional
+    @SuppressWarnings("null")
     public Product updateProduct(UUID id, Product productDetails) {
         Product product = findById(id);
         product.setName(productDetails.getName());
@@ -43,6 +46,7 @@ public class ProductService {
     }
 
     @Transactional
+    @SuppressWarnings("null")
     public void deleteProduct(UUID id) {
         productRepository.deleteById(id);
     }

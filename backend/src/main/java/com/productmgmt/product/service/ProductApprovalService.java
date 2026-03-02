@@ -16,38 +16,41 @@ public class ProductApprovalService {
     private final ProductRepository productRepository;
 
     @Transactional
+    @SuppressWarnings("null")
     public void submitForApproval(UUID productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        
+
         if (product.getStatus() != Product.ProductStatus.DRAFT) {
             throw new RuntimeException("Only DRAFT products can be submitted for approval");
         }
-        
+
         product.setStatus(Product.ProductStatus.PENDING_APPROVAL);
         productRepository.save(product);
     }
 
     @Transactional
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN')")
+    @SuppressWarnings("null")
     public void approveProduct(UUID productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        
+
         if (product.getStatus() != Product.ProductStatus.PENDING_APPROVAL) {
             throw new RuntimeException("Only PENDING_APPROVAL products can be approved");
         }
-        
+
         product.setStatus(Product.ProductStatus.ACTIVE);
         productRepository.save(product);
     }
 
     @Transactional
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPER_ADMIN')")
+    @SuppressWarnings("null")
     public void rejectProduct(UUID productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        
+
         product.setStatus(Product.ProductStatus.DRAFT);
         productRepository.save(product);
     }

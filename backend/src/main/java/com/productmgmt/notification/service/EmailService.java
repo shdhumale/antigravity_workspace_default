@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class EmailService {
 
-    @Retryable(value = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 2000))
+    @Retryable(retryFor = Exception.class, maxAttempts = 3, backoff = @Backoff(delay = 2000))
     public void sendEmail(String to, String subject, String body) {
         log.info("Attempting to send email to {}", to);
         // Placeholder for actual email sending logic (e.g. JavaMailSender)

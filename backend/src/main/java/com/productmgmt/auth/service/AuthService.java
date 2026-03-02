@@ -52,7 +52,6 @@ public class AuthService {
 
         private void saveRefreshToken(User user, String token) {
                 RefreshToken refreshToken = RefreshToken.builder()
-                                .id(UUID.randomUUID().toString())
                                 .user(user)
                                 .tokenHash(token) // In real world, hash this
                                 .issuedAt(Instant.now())
@@ -65,6 +64,7 @@ public class AuthService {
         }
 
         @Transactional
+        @SuppressWarnings("null")
         public void logout(String refreshToken) {
                 refreshTokenRepository.findByTokenHash(refreshToken)
                                 .ifPresent(token -> {

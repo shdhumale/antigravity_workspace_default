@@ -28,8 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
@@ -45,20 +44,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
                 if (jwtService.isTokenValid(jwt, userDetails)) {
+                    java.util.List<String> roles = jwtService.extractRoles(jwt);
+                    java.util.List<org.springframework.security.core.authority.SimpleGrantedAuthority> authorities;
+
+                    if (roles != null && !roles.isEmpty()) {
+                        authorities = roles.stream()
+                                .map(org.springframework.security.core.authority.SimpleGrantedAuthority::new)
+                                .toList();
+                    } else {
+                        authorities = (java.util.List<org.springframework.security.core.authority.SimpleGrantedAuthority>) userDetails
+                                .getAuthorities();
+                    }
+
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,
-                            userDetails.getAuthorities()
-                    );
+                            authorities);
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
         } catch (Exception e) {
-            // Token parsing failed (expired, malformed, etc). 
+            // Token parsing failed (expired, malformed, etc).
             // We just let it continue as unauthenticated.
         }
-        
+
         filterChain.doFilter(request, response);
     }
 }

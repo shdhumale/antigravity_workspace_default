@@ -18,6 +18,7 @@ public class NotificationService {
     private final SimpMessagingTemplate messagingTemplate;
 
     @Transactional
+    @SuppressWarnings("null")
     public void sendNotification(UUID userId, String message, String type) {
         Notification notification = Notification.builder()
                 .userId(userId)
@@ -26,9 +27,9 @@ public class NotificationService {
                 .isRead(false)
                 .createdAt(LocalDateTime.now())
                 .build();
-        
+
         notificationRepository.save(notification);
-        
+
         // Push via WebSocket
         messagingTemplate.convertAndSendToUser(userId.toString(), "/topic/notifications", notification);
     }

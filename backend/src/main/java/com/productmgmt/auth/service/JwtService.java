@@ -29,7 +29,12 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new java.util.HashMap<>(), userDetails);
+        java.util.Map<String, Object> claims = new java.util.HashMap<>();
+        claims.put("roles", userDetails.getAuthorities().stream()
+                .map(org.springframework.security.core.GrantedAuthority::getAuthority)
+                .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role)
+                .toList());
+        return generateToken(claims, userDetails);
     }
 
     public String generateToken(java.util.Map<String, Object> extraClaims, UserDetails userDetails) {
@@ -40,11 +45,15 @@ public class JwtService {
         return buildToken(new java.util.HashMap<>(), userDetails, refreshExpiration);
     }
 
+    @SuppressWarnings("unchecked")
+    public java.util.List<String> extractRoles(String token) {
+        return extractClaim(token, claims -> (java.util.List<String>) claims.get("roles"));
+    }
+
     private String buildToken(
             java.util.Map<String, Object> extraClaims,
             UserDetails userDetails,
-            long expiration
-    ) {
+            long expiration) {
         return Jwts.builder()
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())

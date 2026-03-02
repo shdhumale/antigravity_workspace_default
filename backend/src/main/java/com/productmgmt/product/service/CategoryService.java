@@ -23,6 +23,7 @@ public class CategoryService {
 
     @Transactional
     @CacheEvict(value = "categories", allEntries = true)
+    @SuppressWarnings("null")
     public Category createCategory(Category category) {
         return categoryRepository.save(category);
     }
