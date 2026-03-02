@@ -27,7 +27,7 @@ public class ProductService {
 
     @SuppressWarnings("null")
     public Product findById(UUID id) {
-        return productRepository.findById(id)
+        return productRepository.findByIdFetch(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
     }
 

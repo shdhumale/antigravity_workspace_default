@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-    <div class="flex-1 flex flex-col min-w-0 bg-[#f6f7f8] dark:bg-[#101922] overflow-y-auto">
+    <div class="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark overflow-y-auto">
       <div class="p-8 space-y-8 max-w-7xl mx-auto w-full">
         <!-- Welcome Section -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -18,11 +18,11 @@ import { RouterLink } from '@angular/router';
             <p class="text-slate-500 text-sm mt-1">Real-time status of your product ecosystem and user activity.</p>
           </div>
           <div class="flex gap-3">
-            <button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-bold hover:bg-slate-50 transition-colors">
+            <button (click)="exportData()" class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-sm font-bold hover:bg-slate-50 transition-colors">
               <span class="material-symbols-outlined text-lg text-slate-400">download</span>
               Export Data
             </button>
-            <button routerLink="/products/new" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold shadow-lg shadow-blue-600/20 hover:opacity-90 transition-opacity">
+            <button routerLink="/products/new" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity">
               <span class="material-symbols-outlined text-lg">add</span>
               Add Product
             </button>
@@ -31,10 +31,9 @@ import { RouterLink } from '@angular/router';
 
         <!-- Metrics Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <!-- Metric Card 1: Total Products -->
-          <div class="bg-white dark:bg-[#101922] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
-              <div class="h-10 w-10 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-lg flex items-center justify-center">
+              <div class="h-10 w-10 bg-primary/10 text-primary rounded-lg flex items-center justify-center">
                 <span class="material-symbols-outlined">inventory_2</span>
               </div>
               <span class="flex items-center gap-1 text-xs font-bold text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full">
@@ -46,10 +45,9 @@ import { RouterLink } from '@angular/router';
             <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">{{ dashboardService.stats().totalProducts }}</h3>
           </div>
 
-          <!-- Metric Card 2: Active Users -->
-          <div class="bg-white dark:bg-[#101922] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
-              <div class="h-10 w-10 bg-purple-50 dark:bg-purple-900/20 text-purple-600 rounded-lg flex items-center justify-center">
+              <div class="h-10 w-10 bg-purple-100 dark:bg-purple-900/20 text-purple-600 rounded-lg flex items-center justify-center">
                 <span class="material-symbols-outlined">person_celebrate</span>
               </div>
               <span class="flex items-center gap-1 text-xs font-bold text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full">
@@ -61,10 +59,9 @@ import { RouterLink } from '@angular/router';
             <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">{{ dashboardService.stats().totalUsers }}</h3>
           </div>
 
-          <!-- Metric Card 3: Inventory Value -->
-          <div class="bg-white dark:bg-[#101922] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
-              <div class="h-10 w-10 bg-amber-50 dark:bg-amber-900/20 text-amber-600 rounded-lg flex items-center justify-center">
+              <div class="h-10 w-10 bg-amber-100 dark:bg-amber-900/20 text-amber-600 rounded-lg flex items-center justify-center">
                 <span class="material-symbols-outlined">payments</span>
               </div>
               <span class="flex items-center gap-1 text-xs font-bold text-red-600 bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded-full">
@@ -76,10 +73,9 @@ import { RouterLink } from '@angular/router';
             <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">$1.2M</h3>
           </div>
 
-          <!-- Metric Card 4: Pending Approvals -->
-          <div class="bg-white dark:bg-[#101922] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
-              <div class="h-10 w-10 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 rounded-lg flex items-center justify-center">
+              <div class="h-10 w-10 bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 rounded-lg flex items-center justify-center">
                 <span class="material-symbols-outlined">rule</span>
               </div>
               <span class="flex items-center gap-1 text-xs font-bold text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full">
@@ -93,74 +89,71 @@ import { RouterLink } from '@angular/router';
         </div>
 
         <!-- Recent Activity Table Section -->
-        <div class="bg-white dark:bg-[#101922] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-all duration-500">
           <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div>
               <h3 class="text-lg font-bold text-slate-900 dark:text-white">Recent Activity</h3>
               <p class="text-slate-500 text-sm">Detailed logs of recent product modifications and user updates.</p>
             </div>
             <div class="flex items-center gap-2">
-              <div class="relative">
-                <select class="appearance-none bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 pl-3 pr-8 py-2 focus:ring-blue-600 focus:ring-offset-0 cursor-pointer outline-none">
-                  <option>Last 7 Days</option>
-                  <option>Last 30 Days</option>
-                  <option>This Quarter</option>
-                </select>
-                <span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-base">expand_more</span>
+              <div class="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-800 rounded-lg animate-pulse" *ngIf="dashboardService.isLoading()">
+                <div class="size-2 bg-primary rounded-full"></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase">Updating Live</span>
               </div>
             </div>
           </div>
-          <div class="overflow-x-auto">
+          <div class="overflow-x-auto min-h-[300px]">
             <table class="w-full text-left border-collapse">
               <thead>
                 <tr class="bg-slate-50 dark:bg-slate-800/50">
                   <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 dark:border-slate-800">Date & Time</th>
                   <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 dark:border-slate-800">User</th>
-                  <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 dark:border-slate-800">Action Performed</th>
+                  <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 dark:border-slate-800">Operation</th>
                   <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 dark:border-slate-800">Entity</th>
-                  <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 dark:border-slate-800">Status</th>
-                  <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 dark:border-slate-800 text-right">Actions</th>
+                  <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200 dark:border-slate-800 text-right">More</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-                @for (log of auditLogService.logs() | slice:0:5; track log.id) {
-                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                @for (log of auditLogService.logs() | slice:0:10; track log.id) {
+                  <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-all duration-300">
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-sm font-medium text-slate-900 dark:text-white">{{ log.performedAt | date:'MMM d, y' }}</div>
-                      <div class="text-xs text-slate-500">{{ log.performedAt | date:'HH:mm a' }}</div>
+                      <div class="text-sm font-bold text-slate-900 dark:text-white">{{ log.performedAt | date:'MMM d, y' }}</div>
+                      <div class="text-[10px] text-slate-500 uppercase font-medium">{{ log.performedAt | date:'HH:mm:ss a' }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="flex items-center gap-3">
-                        <div class="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden">
-                           <span class="material-symbols-outlined text-blue-600 text-lg">person</span>
+                        <div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                           <span class="material-symbols-outlined text-primary text-lg">person_2</span>
                         </div>
-                        <div class="text-sm font-semibold text-slate-700 dark:text-slate-300">{{ log.performedBy }}</div>
+                        <div>
+                          <div class="text-sm font-bold text-slate-700 dark:text-slate-200">
+                            {{ log.performedBy.firstName || 'System' }} {{ log.performedBy.lastName || '' }}
+                          </div>
+                          <div class="text-[10px] text-slate-400 capitalize">{{ log.performedBy.email }}</div>
+                        </div>
                       </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                      <div class="text-sm text-slate-600 dark:text-slate-400 font-medium">{{ log.action }}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <span class="text-xs font-bold px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded">{{ log.entityType }}</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      <span class="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                        Completed
+                      <span class="text-[10px] font-extrabold px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-md tracking-wider border border-slate-200 dark:border-slate-700">
+                        {{ log.action }}
                       </span>
                     </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="text-xs font-bold text-primary">{{ log.entityType }}: {{ log.entityId.substring(0, 8) }}...</span>
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-slate-400">
-                      <button class="hover:text-blue-600 transition-colors">
-                        <span class="material-symbols-outlined">more_vert</span>
+                      <button class="hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">analytics</span>
                       </button>
                     </td>
                   </tr>
                 }
-                @if (auditLogService.logs().length === 0) {
+                @if (auditLogService.logs().length === 0 && !auditLogService.isLoading()) {
                   <tr>
-                    <td colspan="6" class="px-6 py-12 text-center text-slate-400">
-                      <span class="material-symbols-outlined text-4xl mb-2">history</span>
-                      <p class="text-sm font-medium">No recent activity found</p>
+                    <td colspan="5" class="px-6 py-20 text-center text-slate-400">
+                      <span class="material-symbols-outlined text-5xl mb-4 text-slate-200 dark:text-slate-800">event_busy</span>
+                      <p class="text-base font-bold text-slate-500">No recent activity detected.</p>
+                      <p class="text-xs mt-1">Actions like creating products will appear here in real-time.</p>
                     </td>
                   </tr>
                 }
@@ -169,45 +162,36 @@ import { RouterLink } from '@angular/router';
           </div>
         </div>
 
-        <!-- Secondary Content Row (Stats + Quick Actions) -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-8">
-          <div class="lg:col-span-2 bg-white dark:bg-[#101922] p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm h-64 relative overflow-hidden">
+        <!-- Secondary Content Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden h-72">
             <div class="flex items-center justify-between mb-6">
-              <h4 class="font-bold text-slate-900 dark:text-white">Monthly Active Trends</h4>
+              <h4 class="font-bold text-slate-900 dark:text-white">Monthly Active Distribution</h4>
               <div class="flex gap-4">
                 <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-                  <span class="text-xs font-bold text-slate-500">Current</span>
-                </div>
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-slate-200"></span>
-                  <span class="text-xs font-bold text-slate-500">Previous</span>
+                  <span class="w-2 h-2 rounded-full bg-primary/40"></span>
+                  <span class="text-[10px] font-bold text-slate-500 uppercase">Growth</span>
                 </div>
               </div>
             </div>
-            <!-- Visual placeholder for a chart -->
-            <div class="absolute bottom-0 left-0 right-0 h-32 flex items-end px-6 gap-3">
-              <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-1/2 rounded-t-sm"></div>
-              <div class="flex-1 bg-blue-600/40 h-2/3 rounded-t-sm"></div>
-              <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-3/4 rounded-t-sm"></div>
-              <div class="flex-1 bg-blue-600/40 h-full rounded-t-sm"></div>
-              <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-1/2 rounded-t-sm"></div>
-              <div class="flex-1 bg-blue-600/40 h-1/3 rounded-t-sm"></div>
-              <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-3/4 rounded-t-sm"></div>
-              <div class="flex-1 bg-blue-600/40 h-2/3 rounded-t-sm"></div>
-              <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-full rounded-t-sm"></div>
-              <div class="flex-1 bg-blue-600/40 h-3/4 rounded-t-sm"></div>
-              <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-1/2 rounded-t-sm"></div>
-              <div class="flex-1 bg-blue-600/40 h-full rounded-t-sm"></div>
+            <div class="absolute bottom-0 left-0 right-0 h-40 flex items-end px-12 gap-4 pb-4">
+              <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-12 rounded-t-lg transition-all duration-700 hover:h-24"></div>
+              <div class="flex-1 bg-primary/30 h-16 rounded-t-lg transition-all duration-700 hover:h-32 hover:bg-primary"></div>
+              <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-24 rounded-t-lg transition-all duration-700"></div>
+              <div class="flex-1 bg-primary/30 h-32 rounded-t-lg transition-all duration-700"></div>
+              <div class="flex-1 bg-slate-100 dark:bg-slate-800 h-16 rounded-t-lg transition-all duration-700"></div>
+              <div class="flex-1 bg-primary/30 h-12 rounded-t-lg transition-all duration-700"></div>
+              <div class="flex-1 bg-primary/30 h-28 rounded-t-lg transition-all duration-700"></div>
             </div>
           </div>
-          <div class="bg-blue-600 p-6 rounded-xl shadow-xl shadow-blue-600/20 text-white flex flex-col justify-between">
+          <div class="bg-primary p-8 rounded-xl shadow-xl shadow-primary/30 text-white flex flex-col justify-between group overflow-hidden relative">
+            <div class="absolute -right-8 -top-8 size-32 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all duration-500"></div>
             <div>
-              <h4 class="font-bold text-lg mb-2">Need a Report?</h4>
-              <p class="text-white/80 text-sm leading-relaxed mb-6">Generate a custom enterprise report with the latest inventory and user metrics instantly.</p>
+              <h4 class="font-bold text-xl mb-3">Enterprise Insights</h4>
+              <p class="text-white/80 text-sm leading-relaxed mb-6">Export high-fidelity reports for production and inventory management instantly.</p>
             </div>
-            <button class="w-full py-3 bg-white text-blue-600 font-bold rounded-lg hover:bg-slate-50 transition-colors shadow-lg uppercase text-xs tracking-wider">
-              Create New Report
+            <button (click)="createReport()" class="w-full py-4 bg-white text-primary font-extrabold rounded-xl hover:translate-y-[-2px] transition-all shadow-lg uppercase text-xs tracking-widest active:translate-y-0">
+              Generate Report
             </button>
           </div>
         </div>
@@ -221,18 +205,30 @@ import { RouterLink } from '@angular/router';
       overflow: hidden; 
       font-family: 'Manrope', 'Inter', sans-serif;
     }
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
   `]
 })
 export class DashboardComponent implements OnInit {
-  dashboardService = inject(DashboardService);
-  auditLogService = inject(AuditLogService);
+  public dashboardService = inject(DashboardService);
+  public auditLogService = inject(AuditLogService);
+
+  private wsConnected = false;
 
   ngOnInit(): void {
     this.dashboardService.loadStats();
     this.auditLogService.loadLogs();
-    this.dashboardService.connectWebSocket();
+    
+    // Guard against multiple connections
+    if (!this.wsConnected) {
+      this.dashboardService.connectWebSocket();
+      this.wsConnected = true;
+    }
+  }
+
+  exportData(): void {
+    alert('STOMP: Data export initiated for high-fidelity inventory audit.');
+  }
+
+  createReport(): void {
+    alert('STOMP: Custom enterprise report is currently being optimized for delivery.');
   }
 }

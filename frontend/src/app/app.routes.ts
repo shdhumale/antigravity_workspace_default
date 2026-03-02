@@ -26,6 +26,11 @@ export const routes: Routes = [
         data: { role: 'MANAGER' }
       },
       {
+        path: 'products/:id/edit',
+        loadComponent: () => import('./features/products/product-wizard.component').then(m => m.ProductWizardComponent),
+        data: { role: 'MANAGER' }
+      },
+      {
         path: 'users',
         loadComponent: () => import('./features/users/user-list.component').then(m => m.UserListComponent),
         data: { role: 'SUPER_ADMIN' }

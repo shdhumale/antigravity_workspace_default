@@ -6,10 +6,15 @@ export interface AuditLog {
   entityType: string;
   entityId: string;
   action: string;
-  performedBy: string;
+  performedBy: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
   performedAt: string;
-  oldValue: string;
-  newValue: string;
+  oldValue: any;
+  newValue: any;
 }
 
 @Injectable({

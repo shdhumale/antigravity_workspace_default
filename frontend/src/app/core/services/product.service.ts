@@ -42,10 +42,22 @@ export class ProductService {
     });
   }
 
+  getProductById(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
   createProduct(product: any): Observable<Product> {
     return this.http.post<Product>(this.apiUrl, product).pipe(
       tap((newProduct) => {
         this.products.update(prods => [...prods, newProduct]);
+      })
+    );
+  }
+
+  updateProduct(id: string, product: any): Observable<Product> {
+    return this.http.put<Product>(`${this.apiUrl}/${id}`, product).pipe(
+      tap((updatedProduct) => {
+        this.products.update(prods => prods.map(p => p.id === id ? updatedProduct : p));
       })
     );
   }

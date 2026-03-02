@@ -58,7 +58,7 @@ import { RouterLink } from '@angular/router';
                     </td>
                     <td class="px-6 py-4">
                       <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-50 text-blue-600">
-                        {{ product.category?.name || 'Uncategorized' }}
+                        {{ product.category.name || 'Uncategorized' }}
                       </span>
                     </td>
                     <td class="px-6 py-4 text-right">
@@ -91,7 +91,7 @@ import { RouterLink } from '@angular/router';
                             <span class="material-symbols-outlined text-lg">publish</span>
                           </button>
                         }
-                        <button class="p-1.5 hover:bg-white rounded shadow-sm text-slate-600">
+                        <button [routerLink]="['/products', product.id, 'edit']" class="p-1.5 hover:bg-white rounded shadow-sm text-slate-600">
                           <span class="material-symbols-outlined text-lg">edit</span>
                         </button>
                       </div>
