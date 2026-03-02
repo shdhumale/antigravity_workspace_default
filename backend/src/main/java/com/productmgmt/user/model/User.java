@@ -20,6 +20,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User implements UserDetails {
 
     @Id
@@ -31,6 +32,7 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -47,6 +49,7 @@ public class User implements UserDetails {
     @Column(name = "mfa_enabled")
     private boolean mfaEnabled;
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     @Column(name = "mfa_secret")
     private String mfaSecret;
 

@@ -44,9 +44,15 @@ public class UserService {
     @Transactional
     public User updateUser(UUID id, User userDetails) {
         User user = findById(id);
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setRole(userDetails.getRole());
+        if (userDetails.getFirstName() != null) {
+            user.setFirstName(userDetails.getFirstName());
+        }
+        if (userDetails.getLastName() != null) {
+            user.setLastName(userDetails.getLastName());
+        }
+        if (userDetails.getRole() != null) {
+            user.setRole(userDetails.getRole());
+        }
         return userRepository.save(user);
     }
 

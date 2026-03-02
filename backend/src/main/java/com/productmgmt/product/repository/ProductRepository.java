@@ -11,6 +11,9 @@ import java.util.UUID;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID> {
 
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.category LEFT JOIN FETCH p.createdBy")
+    List<Product> findAll();
+
     @Query(value = "SELECT * FROM products WHERE MATCH(name, description) AGAINST (?1 IN BOOLEAN MODE)", nativeQuery = true)
     List<Product> searchByKeyword(String keyword);
 }

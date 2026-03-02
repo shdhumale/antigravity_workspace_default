@@ -3,6 +3,9 @@ package com.productmgmt.product.model;
 import com.productmgmt.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,11 +19,18 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    @Column(name = "id", columnDefinition = "VARCHAR(36)")
     private UUID id;
+
+    @Column(nullable = false, unique = true)
+    private String sku;
 
     @Column(nullable = false)
     private String name;
@@ -29,7 +39,9 @@ public class Product {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonProperty("category")
+    @com.fasterxml.jackson.annotation.JsonAlias({ "category_id", "categoryId" })
     private Category category;
 
     @Column(nullable = false)
@@ -42,9 +54,16 @@ public class Product {
     @Column(nullable = false)
     private ProductStatus status;
 
+    @Column(name = "rejection_reason", columnDefinition = "TEXT")
+    private String rejectionReason;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by_id")
+    @JoinColumn(name = "created_by")
     private User createdBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "approved_by")
+    private User approvedBy;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -57,10 +76,12 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<ProductImage> images = new ArrayList<>();
 
     public enum ProductStatus {
-        DRAFT, PENDING_APPROVAL, ACTIVE, ARCHIVED
+        DRAFT, PENDING, ACTIVE, REJECTED, ARCHIVED
     }
 
     @PrePersist

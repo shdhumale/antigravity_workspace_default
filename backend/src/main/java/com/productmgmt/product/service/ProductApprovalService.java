@@ -25,7 +25,7 @@ public class ProductApprovalService {
             throw new RuntimeException("Only DRAFT products can be submitted for approval");
         }
 
-        product.setStatus(Product.ProductStatus.PENDING_APPROVAL);
+        product.setStatus(Product.ProductStatus.PENDING);
         productRepository.save(product);
     }
 
@@ -36,8 +36,8 @@ public class ProductApprovalService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        if (product.getStatus() != Product.ProductStatus.PENDING_APPROVAL) {
-            throw new RuntimeException("Only PENDING_APPROVAL products can be approved");
+        if (product.getStatus() != Product.ProductStatus.PENDING) {
+            throw new RuntimeException("Only PENDING products can be approved");
         }
 
         product.setStatus(Product.ProductStatus.ACTIVE);
